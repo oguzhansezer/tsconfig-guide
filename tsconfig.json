@@ -1,0 +1,120 @@
+{
+  "include": ["src"], // All source files in the src folders will be compiled. src just added as a example
+  "exclude": ["node_modules", "**/__tests__/*"], // Exclude all node_modules and test files. Files just added as a example
+
+  "compilerOptions": {
+    "target": "esnext", // We want to compile to esnext since we want to build a package with browser compatibility. 
+    /* 
+      The target setting changes which JS features are downleveled and which are left intact. 
+      For example, an arrow function () => this will be turned into an equivalent
+      function expression if target is ES5 or lower. (just syntax different things with "module")
+    */  
+    "moduleResolution": "node", // We want to use node resolution for our modules. when module type isn't set to commonjs, it will use node resolution for modules.
+    /*
+    module" is anything aside from "commonjs" you need to explicitly specifiy a "moduleResolution" value of "node" for this to work. 
+    Specifying "commonjs" does this implicitly.
+    */
+    "module": "commonjs", // Use commonjs for compatibility. (exporting module type) 
+    "declaration": true, 
+    /*  
+      Typescript will then also export type definitions together with the compiled javascript code so 
+      the package can be used with both Typescript and Javascript.
+    */
+    "declarationDir": "typings", // This is where the type definitions will be exported to.
+    "outDir": "./tsbuild", // The javascript will be compiled to the tsbuild folder.
+    //!"paths": [
+      //!"jquery": ["node_modules/jquery/dist/jquery"] // this mapping is relative to "baseUrl"
+      //! "shared/*": ["app/_shared/*"],
+      //! "helpers/*": ["helpers/*"],
+      //! "tests/*": ["tests/*"]
+    //!] 
+    /*
+      you can tell the TypeScript file resolver to support a number of custom prefixes to find code. 
+      This pattern can be used to avoid long relative paths within your codebase
+    */
+
+    "jsx": "react", // We want to use react for JSX.
+
+    /* Strict Checks */
+    "strict": true, // We want to be strict when compiling.
+    //! "noImplicitAny": true, 
+    /*
+      Turning on noImplicitAny however TypeScript will issue an error whenever 
+      it would have inferred any: like a => Parameter 's' implicitly has an 'any' type.
+    */
+    //! "strictNullChecks": true,
+    /*
+      when strict true, default true
+      When strictNullChecks is false, null and undefined are effectively ignored by the language.
+      This can lead to unexpected errors at runtime.
+      when true we can got like this error "Object is possibly 'undefined'"
+    */
+    //! "strictFunctionTypes": true, // When strict true, default true. Shortly function type checks.
+    //! "noImplicitThis": true, // When strict true, default true. Raise error on ‘this’ expressions with an implied ‘any’ type.
+    //! "alwaysStrict": true,
+    /*
+     true if strict, false otherwise. Ensures that your files are parsed in the ECMAScript strict mode,
+     and emit “use strict” for each source file.
+    */
+
+
+    "resolveJsonModule": true,
+    /*
+      Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. 
+      This includes generating a type for the import based on the static JSON shape.
+      TypeScript does not support resolving JSON files by default:
+    */
+    "sourceMap": true, // We want to generate source maps. Adds the end of page like this //# sourceMappingURL=index.js.map
+    "lib": ["DOM", "ESNEXT"],
+    /*
+      TypeScript includes a default set of type definitions for built-in JS APIs (like Math),
+      as well as type definitions for things found in browser environments (like document). TypeScript also includes APIs for 
+      newer JS features matching the target you specify; for example the definition for Map is available if target is ES6 or newer.
+    */
+    "esModuleInterop": true, // We want to use ES6 modules. like a default export
+    "skipLibCheck": true, // We don't want to check the libs for compatibility.
+    /*
+      Turning it on will prevent Typescript from type-checking the entire imported libraries. Instead, 
+      Typescript will only type-check the code you use against these types.
+      This means that as long as you aren't using the incompatible parts of imported libraries, they'll compile just fine.
+      (at old versions => skipDefaultLibCheck)
+    */
+   //! "types":["node","react","jest"] 
+   /*
+      By default all visible ”@types” packages are included in your compilation.
+      Packages in node_modules/@types of any enclosing folder are considered visible
+      This tsconfig.json file will only include ./node_modules/@types/node, ./node_modules/@types/react
+      and ./node_modules/@types/jest. Other packages under node_modules/@types/* will not be included.
+   */
+    //! "baseUrl": "./src", // This is the base url for the project. you can use this to import files from the src folder. 
+    /*
+      If you get tired of imports always looking like "../" or "./", or needing to change them as you move files, 
+      this is a great way to fix that.
+    */
+   },
+
+  "isolatedModules": true, // We want to compile all files in the src folder as a single module.
+  "incremental": true, 
+  /*
+    Tells TypeScript to save information about the project graph from the last compilation to files stored on disk.
+    This creates a series of .tsbuildinfo files in the same folder as your compilation output.
+    They are not used by your JavaScript at runtime and can be safely deleted.
+  */
+
+  /* Additional Checks */
+  "removeComments": true, // We want to remove comments from the compiled code.
+  "noUnusedLocals": true, // We want to check unused local variables.
+  "noUnusedParameters": true, // We want to check unused parameters.
+
+  //! "allowUmdGlobalAccess": true, // We want to allow global access to the UMD module.
+  /*
+    When set to true, allowUmdGlobalAccess lets you access UMD exports as globals from inside module files. 
+    A module file is a file that has imports and/or exports. Without this flag,
+    using an export from a UMD module requires an import declaration.
+    An example use case for this flag would be a web project
+    where you know the particular library (like jQuery or Lodash) will always be available at runtime,
+    but you can’t access it with an import.
+  */
+ 
+ 
+}
