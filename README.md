@@ -1,1 +1,1 @@
-# My Awesome Greeter
+# Explanatory example for typescript configs
